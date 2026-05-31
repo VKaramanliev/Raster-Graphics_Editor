@@ -15,6 +15,7 @@ class SessionManager {
         SessionManager(const SessionManager&) = delete;
         SessionManager& operator=(const SessionManager&) = delete;
 
+        void collage(const string& direction, const string& image1, const string& image2, const string& outimage);
         void createSession(const vector<Image*>& images);
         void switchSession(int id);
         void closeSession();

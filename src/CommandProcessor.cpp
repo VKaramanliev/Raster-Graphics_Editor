@@ -59,6 +59,7 @@ void CommandProcessor::help() const {
     cout << "help                                   prints this information" << endl;
     cout << "session info                           prints current session info" << endl;
     cout << "switch <session>                       switches to session" << endl;
+    cout << "collage <horizontal/vertical> <image1> <image2> <outimage>            makes collage from two images" << endl;
     cout << "help                                   prints this information" << endl;
     cout << "exit                                   exits the program" << endl;
 }
@@ -210,6 +211,19 @@ void CommandProcessor::run() {
         } else if (command == "exit") {
             cout << "Exiting the program..." << endl;
             running = false;
+
+        } else if (command == "collage") {
+            if (!manager.hasCurrentSession()) {
+                cout << "No active session." << endl;
+                continue;
+            }
+
+            if (parts.size() != 5) {
+                cout << "Usage: collage <horizontal/vertical> <image1> <image2> <outimage>" << endl;
+                continue;
+            }
+
+            manager.collage(parts[1], parts[2], parts[3], parts[4]);
 
         } else {
             cout << "Unknown command." << endl;

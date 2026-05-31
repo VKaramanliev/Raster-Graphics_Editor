@@ -30,6 +30,7 @@ class Session {
         void monochrome();
         void negative();
         void rotate(const string& direction);
+        void collage(const string& direction, const string& image1, const string& image2, const string& outimage);
 
         void undo();
         void save();

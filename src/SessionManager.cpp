@@ -7,6 +7,18 @@ SessionManager::SessionManager() {
     next = 1;
 }
 
+void SessionManager::collage(const string& direction,
+                             const string& image1,
+                             const string& image2,
+                             const string& outimage) {
+    if (!hasCurrentSession()) {
+        cout << "No active session." << endl;
+        return;
+    }
+
+    getCurrentSession()->collage(direction, image1, image2, outimage);
+}
+
 void SessionManager::createSession(const vector<Image*>& images) {
     if (images.empty()) {
         cout << "Cannot start session without images." << endl;

@@ -85,6 +85,46 @@ void Session::rotate(const string& direction) {
     cout << "Rotate " << direction << "transformation added." << endl;
 }
 
+void Session::collage(const string& direction, const string& image1, const string& image2, const string& outimage) {
+    Image* first = nullptr;
+    Image* second = nullptr;
+
+    for (Image* image : images) {
+        if (image->getName() == image1) {
+            first = image;
+        }
+        
+        if (image->getName() == image2) {
+            second = image;
+        }
+    }
+
+    if (first == nullptr || second == nullptr) {
+        cout << "Images not found in the current session!" << endl;
+        return; 
+    }
+
+    if (first->getWidth() != second->getWidth() || first->getHeight() != second->getHeight()) {
+        cout << "Cannot make a collage from different dimensions!" << endl;
+        return;
+    }
+
+    string firstName = first->getName();
+    string secondName = second->getName();
+
+    if (firstName.substr(firstName.find_last_of('.')) != secondName.substr(secondName.find_last_of('.'))) {
+        cout << "Cannot make a collage from different types!" << endl;
+        return;
+    }
+
+    Image* result = first->collage(direction, second, outimage);
+
+    if (result != nullptr) {
+        images.push_back(result);
+        cout << "New collage " << outimage << " created" << endl;
+    }
+}
+
 void Session::applyTransformation(Image* image, const Transformation& transformation) {
     if (transformation.name == "grayscale") {
         image->grayscale();

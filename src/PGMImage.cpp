@@ -99,6 +99,43 @@ void PGMImage::rotate(const string& direction) {
     height = oldWidth;
 }
 
+Image* PGMImage::collage(const string& direction, const Image* other, const string& outName) const {
+    const PGMImage* second = (const PGMImage*) other;
+
+    PGMImage* result = new PGMImage(outName);
+    result->maxValue = maxValue;
+
+    if (direction == "horizontal") {
+        result->width = width * 2;
+        result->height = height;
+        result->pixels.resize(height, vector<int>(width * 2));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i][j + width] = second->pixels[i][j];
+            }
+        }
+    } else if (direction == "vertical") {
+        result->width = width;
+        result->height = height * 2;
+        result->pixels.resize(height * 2, vector<int>(width));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i + height][j] = second->pixels[i][j];
+            }
+        }
+    } else {
+        cout << "Invalid direction!" << endl;
+        delete result;
+        return nullptr;
+    }
+
+    return result;
+}
+
 Image* PGMImage::clone() const {
     return new PGMImage(*this);
 }

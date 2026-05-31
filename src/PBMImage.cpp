@@ -124,6 +124,42 @@ void PBMImage::rotate(const string& direction) {
     height = width;
 }
 
+Image* PBMImage::collage(const string& direction, const Image* other, const string& outName) const {
+    const PBMImage* second = (const PBMImage*) other;
+
+    PBMImage* result = new PBMImage(outName);
+
+    if (direction == "horizontal") {
+        result->width = width * 2;
+        result->height = height;
+        result->pixels.resize(height, vector<int>(width * 2));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i][j + width] = second->pixels[i][j];
+            }
+        }
+    } else if (direction == "vertical") {
+        result->width = width;
+        result->height = height * 2;
+        result->pixels.resize(height * 2, vector<int>(width));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i + height][j] = second->pixels[i][j];
+            }
+        }
+    } else {
+        cout << "Invalid direction!" << endl;
+        delete result;
+        return nullptr;
+    }
+
+    return result;
+}
+
 Image* PBMImage::clone() const {
     return new PBMImage(*this);
 }

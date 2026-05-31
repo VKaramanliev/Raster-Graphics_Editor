@@ -156,6 +156,45 @@ void PPMImage::rotate(const string& direction) {
     height = width;
 }
 
+Image* PPMImage::collage(const string& direction, const Image* other, const string& outName) const {
+    const PPMImage* second = (const PPMImage*) other;
+
+    PPMImage* result = new PPMImage(outName);
+    result->maxValue = maxValue;
+
+    if (direction == "horizontal") {
+        result->width = width * 2;
+        result->height = height;
+        result->pixels.resize(height, vector<RGB>(width * 2));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i][j + width] = second->pixels[i][j];
+            }
+        }
+    }
+    else if (direction == "vertical") {
+        result->width = width;
+        result->height = height * 2;
+        result->pixels.resize(height * 2, vector<RGB>(width));
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result->pixels[i][j] = pixels[i][j];
+                result->pixels[i + height][j] = second->pixels[i][j];
+            }
+        }
+    }
+    else {
+        cout << "Invalid direction!" << endl;
+        delete result;
+        return nullptr;
+    }
+
+    return result;
+}
+
 Image* PPMImage::clone() const {
     return new PPMImage(*this);
 }

@@ -22,6 +22,7 @@ class Image {
         virtual void monochrome() {};
         virtual void negative() = 0;
         virtual void rotate(const string& direction) = 0;
+        virtual Image* collage(const string& direction, const Image* other, const string& outName) const = 0;
 
         string getName() const;
         int getWidth() const;
