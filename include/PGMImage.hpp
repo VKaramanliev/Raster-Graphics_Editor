@@ -12,7 +12,7 @@ class PGMImage : public Image {
     public:
         PGMImage(const string& name);
 
-        void load() override;
+        bool load() override;
         void save() const override;
         void saveas(const string& newName) const override;
 

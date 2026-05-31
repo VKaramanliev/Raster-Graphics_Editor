@@ -5,12 +5,12 @@
 
 PBMImage::PBMImage(const string& name) : Image(name) {}
 
-void PBMImage::load() {
+bool PBMImage::load() {
     ifstream file(name);
 
     if (!file.is_open()) {
         cout << "Cannot open file: " << name << endl;
-        return;
+        return false;
     }
 
     string format;
@@ -19,7 +19,7 @@ void PBMImage::load() {
     if (format != "P1") {
         cout << "Invalid file format!" << endl;
         file.close();
-        return;
+        return false;
     }
 
     file >> width >> height;
@@ -33,7 +33,7 @@ void PBMImage::load() {
 
             if (value != 0 && value != 1) {
                 cout << "Invalid pixel value!" << endl;
-                return;
+                return false;
             }
 
             pixels[i][j] = value;
@@ -41,6 +41,7 @@ void PBMImage::load() {
     }
 
     file.close();
+    return true;
 }
 
 void PBMImage::save() const {
@@ -121,7 +122,7 @@ void PBMImage::rotate(const string& direction) {
 
     int oldWidth = width;
     width = height;
-    height = width;
+    height = oldWidth;
 }
 
 Image* PBMImage::collage(const string& direction, const Image* other, const string& outName) const {

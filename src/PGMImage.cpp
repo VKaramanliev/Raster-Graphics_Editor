@@ -5,12 +5,12 @@
 
 PGMImage::PGMImage(const string& name) : Image(name), maxValue(255) {}
 
-void PGMImage::load() {
+bool PGMImage::load() {
     ifstream file(name);
 
     if (!file.is_open()) {
         cout << "Cannot open file: " << name << endl;
-        return;
+        return false;
     }
 
     string format;
@@ -19,7 +19,7 @@ void PGMImage::load() {
     if (format != "P2") {
         cout << "Invalid file format!" << endl;
         file.close();
-        return;
+        return false;
     }
 
     file >> width >> height >> maxValue;
@@ -33,6 +33,7 @@ void PGMImage::load() {
     }
 
     file.close();
+    return true;
 }
 
 void PGMImage::save() const {
@@ -48,7 +49,7 @@ void PGMImage::saveas(const string& newName) const {
     }
 
     file << "P2" << endl;
-    file << width << height << endl;
+    file << width << " " << height << endl;
     file << maxValue << endl;
 
     for (int i = 0; i < height; i++) {

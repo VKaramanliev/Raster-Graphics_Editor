@@ -90,8 +90,11 @@ void CommandProcessor::run() {
                 Image* image = createImage(parts[i]);
 
                 if (image != nullptr) {
-                    image->load();
-                    images.push_back(image);
+                    if (image->load()) {
+                        images.push_back(image);
+                    } else {
+                        delete image;
+                    }
                 }
             }
 
@@ -112,8 +115,11 @@ void CommandProcessor::run() {
             Image* image = createImage(parts[1]);
 
             if (image != nullptr) {
-                image->load();
-                manager.getCurrentSession()->addImage(image);
+                if (image->load()) {
+                    manager.getCurrentSession()->addImage(image);
+                } else {
+                    delete image;
+                }
             }
         } else if (command == "save") {
             if (!manager.hasCurrentSession()) {

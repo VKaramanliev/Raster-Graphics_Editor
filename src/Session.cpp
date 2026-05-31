@@ -165,16 +165,17 @@ void Session::saveas(const string& fileName) {
         return;
     }
 
-    for (Image* image : images) {
-        for (const Transformation& transformation : transformations) {
-            applyTransformation(image, transformation);
-        }
+    Image* copy = images[0]->clone();
+
+    for (const Transformation& transformation : transformations) {
+        applyTransformation(copy, transformation);
     }
 
-    images[0]->saveas(fileName);
-    transformations.clear();
+    copy->saveas(fileName);
 
-    cout << "Image saved as " << fileName << endl; 
+    delete copy;
+
+    cout << "Image saved as " << fileName << endl;
 }
 
 void Session::info() const {

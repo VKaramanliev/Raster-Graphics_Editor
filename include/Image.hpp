@@ -14,7 +14,7 @@ class Image {
     public:
         Image(const string& name);
 
-        virtual void load() = 0;
+        virtual bool load() = 0;
         virtual void save() const = 0;
         virtual void saveas(const string& newName) const = 0;
 

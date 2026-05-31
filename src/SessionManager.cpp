@@ -7,10 +7,7 @@ SessionManager::SessionManager() {
     next = 1;
 }
 
-void SessionManager::collage(const string& direction,
-                             const string& image1,
-                             const string& image2,
-                             const string& outimage) {
+void SessionManager::collage(const string& direction, const string& image1, const string& image2, const string& outimage) {
     if (!hasCurrentSession()) {
         cout << "No active session." << endl;
         return;

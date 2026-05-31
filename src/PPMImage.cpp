@@ -5,12 +5,12 @@
 
 PPMImage::PPMImage(const string& name) : Image(name), maxValue(255) {}
 
-void PPMImage::load() {
+bool PPMImage::load() {
     ifstream file(name);
 
     if (!file.is_open()) {
         cout << "Cannot open file: " << name << endl;
-        return;
+        return false;
     }
 
     string format;
@@ -19,7 +19,7 @@ void PPMImage::load() {
     if (format != "P3") {
         cout << "Invalid file format!" << endl;
         file.close();
-        return;
+        return false;
     }
 
     file >> width >> height >> maxValue;
@@ -33,6 +33,7 @@ void PPMImage::load() {
     }
 
     file.close();
+    return true;
 }
 
 void PPMImage::save() const {
@@ -69,7 +70,7 @@ void PPMImage::saveas(const string& newName) const {
     }
 
     file << "P3" << endl;
-    file << width << height << endl;
+    file << width << " " << height << endl;
     file << maxValue << endl;
 
     for (int i = 0; i < height; i++) {
@@ -153,7 +154,7 @@ void PPMImage::rotate(const string& direction) {
     
     int oldWidth = width;
     width = height;
-    height = width;
+    height = oldWidth;
 }
 
 Image* PPMImage::collage(const string& direction, const Image* other, const string& outName) const {
