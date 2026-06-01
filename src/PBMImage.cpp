@@ -23,7 +23,7 @@ bool PBMImage::load() {
     }
 
     file >> width >> height;
-    pixels.clear(); // изчиства старата снимка преди да се сложи новата
+    pixels.clear();
     pixels.resize(height, vector<int>(width));
 
     int value;
