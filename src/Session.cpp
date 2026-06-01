@@ -82,7 +82,7 @@ void Session::rotate(const string& direction) {
     }
 
     transformations.push_back(Transformation("rotate", direction));
-    cout << "Rotate " << direction << "transformation added." << endl;
+    cout << "Rotate " << direction << " transformation added." << endl;
 }
 
 void Session::collage(const string& direction, const string& image1, const string& image2, const string& outimage) {
@@ -175,6 +175,7 @@ void Session::saveas(const string& fileName) {
 
     delete copy;
 
+    transformations.clear();
     cout << "Image saved as " << fileName << endl;
 }
 

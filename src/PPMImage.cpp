@@ -148,6 +148,9 @@ void PPMImage::rotate(const string& direction) {
                 rotated[width - 1 - j][i] = pixels[i][j];
             }
         }
+    } else {
+        cout << "Invalid rotate direction. You should use only left or right!" << endl;
+        return;
     }
 
     pixels = rotated;
