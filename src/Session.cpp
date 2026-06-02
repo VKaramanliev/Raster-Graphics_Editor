@@ -144,6 +144,7 @@ void Session::undo() {
     }
 
     transformations.pop_back();
+    cout << "Last transformation undone" << endl;
 }
 
 void Session::save() {
