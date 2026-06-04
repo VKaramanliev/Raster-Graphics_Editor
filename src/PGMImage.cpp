@@ -90,7 +90,7 @@ void PGMImage::rotate(const string& direction) {
             }
         }
     } else {
-        cout << "Invalid rotate direction. You should use only left or right!" << endl;
+        cout << "Invalid direction. You should use only left or right!" << endl;
         return;
     }
 

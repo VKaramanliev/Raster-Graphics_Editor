@@ -44,12 +44,11 @@ Session& Session::operator=(Session&& other) noexcept {
         for (Image* image : images) {
             delete image;
         }
+        images.clear();
 
         id = other.id;
         images = move(other.images);
         transformations = move(other.transformations);
-
-        other.images.clear();
     }
 
     return *this;

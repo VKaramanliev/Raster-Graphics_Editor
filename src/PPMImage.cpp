@@ -86,7 +86,22 @@ void PPMImage::saveas(const string& newName) const {
     file.close();
 }
 
+bool PPMImage::isGrayscale() const {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (pixels[i][j].r != pixels[i][j].g || pixels[i][j].g != pixels[i][j].b) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void PPMImage::grayscale() {
+    if (isGrayscale()) {
+        return;
+    }
+    
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             int gray = (pixels[i][j].r + pixels[i][j].g + pixels[i][j].b) / 3;
@@ -98,7 +113,26 @@ void PPMImage::grayscale() {
     }
 }
 
+bool PPMImage::isMonochrome() const {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            bool black = (pixels[i][j].r == 0 && pixels[i][j].g == 0 && pixels[i][j].b == 0);
+
+            bool white = (pixels[i][j].r == maxValue && pixels[i][j].g == maxValue && pixels[i][j].b == maxValue);
+
+            if (!black && !white) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void PPMImage::monochrome() {
+    if (isMonochrome()) {
+        return;
+    }
+    
     grayscale();
 
     int middle = maxValue / 2;

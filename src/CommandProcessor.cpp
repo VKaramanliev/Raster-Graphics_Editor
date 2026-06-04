@@ -208,7 +208,7 @@ void CommandProcessor::run() {
                 continue;
             }
 
-            int id = std::stoi(parts[1]);
+            int id = stoi(parts[1]);
             manager.switchSession(id);
 
         } else if (command == "help") {

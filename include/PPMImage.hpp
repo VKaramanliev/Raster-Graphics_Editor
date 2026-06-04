@@ -15,6 +15,9 @@ class PPMImage : public Image {
         vector<vector<RGB>> pixels;
         int maxValue;
 
+        bool isGrayscale() const;
+        bool isMonochrome() const;
+
     public:
         PPMImage(const string& name);
 
